@@ -392,27 +392,27 @@ public class WeatherTimeoutCache
 
 	// First query the db to find all expired Weather Values
 	// objects' ids.
-	try (Cursor expiredData =
-             mContext.getContentResolver().query
-                 (WeatherValuesEntry.WEATHER_VALUES_CONTENT_URI, 
-                  new String[] { WeatherValuesEntry.COLUMN_LOCATION_KEY },
-                  EXPIRATION_SELECTION, 
-                  new String[] {String.valueOf(System.currentTimeMillis())}, 
-                  null)) { 
-	    // Use the expired data id's to delete the designated
-	    // entries from both tables.
-	    if (expiredData != null 
-                && expiredData.moveToFirst()) {
-		do {
-                    // Get the location to delete.
-		    final String deleteLocation =
-                        expiredData.getString
-                            (expiredData.getColumnIndex
-                        	    (WeatherValuesEntry.COLUMN_LOCATION_KEY));
-                    remove(deleteLocation);
-		} while (expiredData.moveToNext());
-	    }
-	}
+		try (Cursor expiredData =
+	             mContext.getContentResolver().query
+	                 (WeatherValuesEntry.WEATHER_VALUES_CONTENT_URI, 
+	                  new String[] { WeatherValuesEntry.COLUMN_LOCATION_KEY },
+	                  EXPIRATION_SELECTION, 
+	                  new String[] {String.valueOf(System.currentTimeMillis())}, 
+	                  null)) { 
+		    // Use the expired data id's to delete the designated
+		    // entries from both tables.
+		    if (expiredData != null 
+	                && expiredData.moveToFirst()) {
+				do {
+		                    // Get the location to delete.
+				    final String deleteLocation =
+		                        expiredData.getString
+		                            (expiredData.getColumnIndex
+		                        	    (WeatherValuesEntry.COLUMN_LOCATION_KEY));
+		                    remove(deleteLocation);
+				} while (expiredData.moveToNext());
+		    }
+		}
     }
 
     /**
